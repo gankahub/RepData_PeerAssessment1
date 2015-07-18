@@ -4,14 +4,37 @@ output:
   html_document:
     keep_md: true
 ---
-
+##Loading libraries required for analysis
+```{r}
+library(dplyr)
+```
 
 ## Loading and preprocessing the data
+Creating a data directory if it does not exist
+```{r}
+  if(!file.exists("Data")){
+    dir.create("Data")
+  }
+```
 
+Unzipping source file
+```{r}
+  unzip('activity.zip',exdir='./Data/')
+```
 
+Importing source file
+```{r}
+  Import <- read.csv(file='./Data/activity.csv')
+```
 
 ## What is mean total number of steps taken per day?
 
+```{r}
+Steps_Mean <- Import %>%
+                filter(steps != 'NA') %>%
+                group_by(date) %>%
+                summarise(Daily_Steps = sum(steps))
+```
 
 
 ## What is the average daily activity pattern?
